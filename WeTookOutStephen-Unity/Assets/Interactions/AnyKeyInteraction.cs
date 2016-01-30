@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AnyKeyInteraction : InteractionBase {
+public class AnyKeyInteraction : InteractionBase
+{
 
 	void Update () {
 
