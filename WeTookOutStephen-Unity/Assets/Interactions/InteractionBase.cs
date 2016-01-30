@@ -13,4 +13,9 @@ public class InteractionBase : MonoBehaviour {
         // Disables this object for now.
         this.gameObject.SetActive(false);
     }
+
+    protected void OnInteractionFail()
+    {
+
+    }
 }

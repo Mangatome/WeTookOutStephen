@@ -15,4 +15,6 @@ public class ClickInteraction : InteractionBase, IPointerClickHandler
             this.OnInteractionSuccess();
         } 
     }
+
+    
 }
