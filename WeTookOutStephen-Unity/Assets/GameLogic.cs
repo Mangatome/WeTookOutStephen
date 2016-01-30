@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameLogic : MonoBehaviour {
 
     public List<Container> allContainers;
+    public List<Sprite> allVisuals;
 
     private Container _currentContainer;
 
 	// Use this for initialization
 	void Start () {
-        SpawnRandomContainerAndTakeOver();
+        StartCoroutine(SpawnContainerAndTakeOver(allContainers.Where(c => c.directContainersCount == 0).RandomOrDefault()));
 	}
 
     private void SpawnRandomContainerAndTakeOver()
@@ -22,6 +24,10 @@ public class GameLogic : MonoBehaviour {
     {
         // Instanciates the container.
         Container c = Instantiate<Container>(container);
+
+        // Camera color
+        Camera cam = Camera.main;
+        cam.backgroundColor = new Color(Random.value, Random.value, Random.value, 1f);
 
         // Brings it into view.
         Transform t = c.transform;
@@ -35,6 +41,20 @@ public class GameLogic : MonoBehaviour {
             Destroy(_currentContainer.gameObject);
         }
         _currentContainer = c;
+    }
+
+    void OnContainerStarted(Container container)
+    {
+        // Gives this a random appearance if it's a simple one.
+        if (container.directContainersCount == 0)
+        {
+            SpriteRenderer sr = container.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                sr = container.gameObject.AddComponent<SpriteRenderer>();
+            }
+            sr.sprite = allVisuals.RandomOrDefault();
+        }
     }
 
     void OnContainerInteractionsCompleted(Container container)

@@ -34,4 +34,41 @@ public static class Extensions {
         return val;
     }
 
+    /// <summary>
+    /// Gets a color representing this type.
+    /// </summary>
+    /// <param name="behavior"></param>
+    /// <returns></returns>
+    public static Color GetTypeColor(this MonoBehaviour behavior)
+    {
+        int i = Mathf.Abs(behavior.GetType().FullName.GetHashCode());
+        using (ScopeRandom r = new ScopeRandom(i))
+        {
+            return new Color((float)(i % r.Range(0, 256) + i % 42) / 256f, (float)(i % r.Range(0, 256) + i % 23) / 256f, (float)(i % r.Range(0, 256)) / 256f, 1f);
+        }
+    }
+
+    /// <summary>
+    /// Returns an array of components of a certain type that can be found in this
+    /// Component's direct children (not itself, and not its grandchildren).
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public static T[] GetComponentsInDirectChildren<T>(this Component c, bool includeSelf = true) where T : Component
+    {
+        List<T> compos = new List<T>();
+
+        foreach (Transform tr in c.transform)
+        {
+            T t = tr.GetComponent<T>();
+
+            if (t != null && (includeSelf || t != c))
+            {
+                compos.Add(t);
+            }
+        }
+
+        return compos.ToArray();
+    }
 }

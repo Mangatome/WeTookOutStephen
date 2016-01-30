@@ -18,4 +18,15 @@ public class InteractionBase : MonoBehaviour {
     {
 
     }
+
+    #region Gizmos
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = this.GetTypeColor();
+
+        Gizmos.DrawWireCube(transform.position, 0.25f * Vector3.one);
+    }
+
+    #endregion
 }
