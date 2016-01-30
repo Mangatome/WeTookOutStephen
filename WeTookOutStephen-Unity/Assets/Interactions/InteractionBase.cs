@@ -10,5 +10,11 @@ public class InteractionBase : MonoBehaviour {
         
         // TODO: this will alert the GameState and trigger some scene changes
     }
-	
+
+    protected void OnInteractionFail()
+    {
+
+    }
+
+
 }
