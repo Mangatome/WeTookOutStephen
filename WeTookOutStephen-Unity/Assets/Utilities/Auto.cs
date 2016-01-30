@@ -132,38 +132,22 @@ public static class Auto
         s.color = end;
     }
 
-    //public static IEnumerator FadeTo(this AudioSource s, float volumeTarget, float duration, Easer ease)
-    //{
-    //    // If there's an AudioVolume, let's harness its power instead of setting the AudioSource's volume.
-    //    AudioVolume av = s.GetComponent<AudioVolume>();
-        
-    //    float elapsed = 0;
-    //    var start = av != null ? av.volume : s.volume;
-    //    var end = volumeTarget;
+    public static IEnumerator FadeTo(this AudioSource s, float volumeTarget, float duration, Easer ease)
+    {
+        float elapsed = 0;
+        var start = s.volume;
+        var end = volumeTarget;
 
-    //    while (elapsed < duration)
-    //    {
-    //        elapsed = Mathf.MoveTowards(elapsed, duration, Time.deltaTime);
-    //        float vol = Mathf.Lerp(start, end, ease(elapsed / duration));
-    //        if (av != null)
-    //        {
-    //            av.volume = vol;
-    //        }
-    //        else
-    //        {
-    //            s.volume = vol;
-    //        }
-    //        yield return 0;
-    //    }
-    //    if (av != null)
-    //    {
-    //        av.volume = end;
-    //    }
-    //    else
-    //    {
-    //        s.volume = end;
-    //    }
-    //}
+        while (elapsed < duration)
+        {
+            elapsed = Mathf.MoveTowards(elapsed, duration, Time.deltaTime);
+            float vol = Mathf.Lerp(start, end, ease(elapsed / duration));
+            s.volume = vol;
+            yield return 0;
+        }
+
+        s.volume = end;
+    }
 
 	public static IEnumerator MoveTo(this Transform transform, Vector3 target, float duration, Easer ease)
 	{
