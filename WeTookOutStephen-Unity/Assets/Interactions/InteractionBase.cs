@@ -3,12 +3,14 @@ using System.Collections;
 
 public class InteractionBase : MonoBehaviour {
 
+    public bool isSuccess { get; private set; }
+
     protected void OnInteractionSuccess()
     {
-        // TODO: Disables this object for now.
+        // Marks this as a success.
+        isSuccess = true;
+
+        // Disables this object for now.
         this.gameObject.SetActive(false);
-        
-        // TODO: this will alert the GameState and trigger some scene changes
     }
-	
 }
