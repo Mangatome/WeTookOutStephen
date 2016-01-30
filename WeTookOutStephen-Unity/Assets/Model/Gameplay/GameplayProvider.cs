@@ -8,7 +8,7 @@ namespace Assets.Model.Gameplay
 {
     class GameplayProvider
     {
-        private List<AbstractGameplay> gameplays;
+        private List<AbstractGameplay> gameplays = new List<AbstractGameplay>();
         private Random rndGen;
 
         public GameplayProvider(int seed)

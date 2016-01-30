@@ -7,7 +7,7 @@ namespace Assets.Model.Resources
 {
     class ResourceConstraint
     {
-        private List<AbstractResource> constraints;
+        private List<AbstractResource> constraints = new List<AbstractResource>();
 
         public void addResourceConstraint(AbstractResource resource)
         {
