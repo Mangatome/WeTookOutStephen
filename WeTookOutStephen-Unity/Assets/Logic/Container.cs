@@ -43,10 +43,11 @@ public class Container : MonoBehaviour {
     {
         if (content.Contains(c))
         {
+            // Removes this container from the scene.
             content.Remove(c);
+            Destroy(c.gameObject);
 
-            Destroy(c);
-
+            // Refreshes this container.
             Refresh();
         }
     }

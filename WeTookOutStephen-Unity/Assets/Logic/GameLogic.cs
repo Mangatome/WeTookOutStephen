@@ -32,7 +32,7 @@ public class GameLogic : MonoBehaviour {
         // Destroys the current container.
         if (_currentContainer != null)
         {
-            Destroy(_currentContainer);
+            Destroy(_currentContainer.gameObject);
         }
         _currentContainer = c;
     }
