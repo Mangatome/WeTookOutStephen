@@ -7,6 +7,8 @@ public class GameLogic3 : MonoBehaviour {
     public List<Sprite> backgrounds;
     public List<Sprite> foregrounds;
 
+    public MusicMixer musicMixer;
+
     private SpriteRenderer _currentBackground; // order = -1
     private SpriteRenderer _nextBackground; // order = -2
 
@@ -49,7 +51,7 @@ public class GameLogic3 : MonoBehaviour {
          Space.World, true);
 
         // makes new foreground objects.
-        int cnt = Random.Range(2, 5);
+        int cnt = Random.Range(2, 4);
         _foregroundObjects = new List<SpriteRenderer>();
         for (int i = 0; i < cnt; i++)
         {
@@ -64,27 +66,39 @@ public class GameLogic3 : MonoBehaviour {
             t.localScale = Random.Range(0.3f, 1f) * Vector3.one;
 
             // Appear into position.
-            StartCoroutine(t.ScaleFrom(t.localScale * 2f, Random.Range(0.5f, 2f)));
+            StartCoroutine(t.ScaleFrom(t.localScale * 2f, Random.Range(0.5f, 2f), Ease.QuadInOut));
             StartCoroutine(sr.Fade(Extensions.clearWhite, Color.white, Random.Range(0.5f, 2f), Ease.Linear));
         }
 
         // zooms out current background to be a new foreground object.
         if (_currentBackground != null)
         {
-            yield return StartCoroutine(_currentBackground.transform.ScaleTo(Random.Range(0.3f, 0.7f) * Vector3.one, 2f));
-
-            _foregroundObjects.Add(_currentBackground);
-            _currentBackground.sortingOrder = 0;
+            StartCoroutine(ScaleAndAddToForegroundObject(_currentBackground));
         }
 
         // The next background becomes new background.
         _currentBackground = _nextBackground;
         _nextBackground.sortingOrder = -1;
+        StartCoroutine(_currentBackground.transform.ScaleFrom(_currentBackground.transform.localScale * 1.5f, 1f, Ease.QuadOut));
 
+        // music change
+        musicMixer.requestNextLevel();
 
         yield return new WaitForSeconds(1f);
 
         _isTransitioning = false;
+    }
+
+    private IEnumerator ScaleAndAddToForegroundObject(SpriteRenderer sr)
+    {
+        Transform t = sr.transform;
+
+        sr.sortingOrder = 0;
+
+        yield return StartCoroutine(t.ScaleTo(Random.Range(0.3f, 0.7f) * Vector3.one, 2f));
+
+        _foregroundObjects.Add(sr);
+        
     }
 
     private SpriteRenderer MakeSpriteRenderer(Sprite sprite, int order)
