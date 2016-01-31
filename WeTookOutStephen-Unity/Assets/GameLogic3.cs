@@ -9,6 +9,7 @@ public class GameLogic3 : MonoBehaviour {
     public List<Sprite> foregrounds;
 
     public MusicMixer musicMixer;
+    public SoundEffectMixer soundMixer;
 
     public EventSystem eventSystem;
 
@@ -51,6 +52,7 @@ public class GameLogic3 : MonoBehaviour {
         {
             Destroy(c.gameObject);
             _foregroundObjects.RemoveAt(index);
+            soundMixer.playRandom();
         }
 
         if (_foregroundObjects.Count == 0)
@@ -100,6 +102,7 @@ public class GameLogic3 : MonoBehaviour {
 
         // music change
         musicMixer.requestNextLevel();
+        soundMixer.playZoomSound();
 
         yield return new WaitForSeconds(1f);
 
