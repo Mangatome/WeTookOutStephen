@@ -106,10 +106,23 @@ public class GameLogic3 : MonoBehaviour {
         // GameObject
         GameObject go = new GameObject(sprite.name);
 
+        // Transform
+        go.transform.parent = transform;
+
         // Sprite Renderer
         SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
         sr.sortingOrder = order;
         sr.sprite = sprite;
+
+        // Animations.
+        if (Random.value > 0.5f)
+        {
+            go.AddComponent<Shaker>();
+        }
+        else
+        {
+            go.AddComponent<Wobbler>();
+        }
 
         return sr;
     }
