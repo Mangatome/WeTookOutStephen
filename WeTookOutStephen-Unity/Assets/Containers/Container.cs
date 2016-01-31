@@ -30,6 +30,23 @@ public class Container : MonoBehaviour {
             return _content;
         }
     }
+
+    public int nestedLevel
+    {
+        get
+        {
+            Transform parent = transform.parent;
+            Container cParent;
+            if (parent == null || (cParent = parent.GetComponent<Container>()) == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return cParent.nestedLevel + 1;
+            }
+        }
+    }
     
     private List<Container> _content;
 

@@ -55,6 +55,12 @@ public class GameLogic : MonoBehaviour {
             }
             sr.sprite = allVisuals.RandomOrDefault();
         }
+
+        //// Direct children containers which contain stuff should get a "zoom in" proxy.
+        //if (container.nestedLevel == 1 && container.directContainersCount > 0)
+        //{
+            
+        //}
     }
 
     void OnContainerInteractionsCompleted(Container container)
