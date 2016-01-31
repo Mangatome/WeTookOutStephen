@@ -12,7 +12,6 @@ public class MusicMixer : MonoBehaviour {
     private int playingCount = 0;
     private BitArray playing;
     private System.Random rnd = new System.Random();
-    private float tlimit = 20;
 
     private int getNextClipId()
     {
@@ -37,19 +36,10 @@ public class MusicMixer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (nextLevelRequested && asources[0].time < 0.1)
+        if (nextLevelRequested && asources[0].time < 0.5)
         {
             nextLevelRequested = false;
             nextLevel();
-        }
-
-
-        // testing
-        if (Time.time > tlimit)
-        {
-            tlimit += 20;
-            requestNextLevel();
         }
 	}
 
@@ -73,8 +63,7 @@ public class MusicMixer : MonoBehaviour {
             playing.Set(nextClipId, true);
             playingCount = 1;
         }
-        // add another clip
-        if (playingCount < 3)
+        else
         {
             asources[playingCount].clip = clips[nextClipId];
             playing.Set(nextClipId, true);
