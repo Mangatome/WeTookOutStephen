@@ -5,6 +5,11 @@ using UnityEngine;
 public static class Extensions {
 
     /// <summary>
+    /// Transparent white. RGBA is (1, 1, 1, 0).
+    /// </summary>
+    public static readonly Color clearWhite = new Color(1f, 1f, 1f, 0f);
+
+    /// <summary>
     /// Returns a random element from the enumerable, or the default value for
     /// the type if none is found.
     /// </summary>
@@ -70,5 +75,54 @@ public static class Extensions {
         }
 
         return compos.ToArray();
+    }
+
+    /// <summary>
+    /// Scales and translates this SpriteRenderer so that its bounds fit given bounds.
+    /// </summary>
+    /// <param name="sr"></param>
+    /// <param name="bounds"></param>
+    /// <param name="space"></param>
+    public static void FitToBounds(this SpriteRenderer sr, Bounds bounds, Space space, bool keepAspect)
+    {
+        Bounds currentBounds = sr.bounds;
+        Vector3 cbs = currentBounds.size;
+        Vector3 nbs = bounds.size;
+        Transform tr = sr.transform;
+        Vector3 cs = tr.localScale;
+
+        tr.localScale = new Vector3(
+            cs.x * nbs.x / cbs.x,
+            cs.y * nbs.y / cbs.y,
+            1f);
+
+        if (keepAspect)
+        {
+            tr.localScale = Vector3.one * Mathf.Max(tr.localScale.x, tr.localScale.y, tr.localScale.z);
+        }
+
+        Vector3 center = bounds.center.ReplaceZ(tr.position.z);
+        if (space == Space.World)
+        {
+            tr.position = center;
+        }
+        else
+        {
+            tr.localPosition = center;
+        }
+    }
+
+    /// <summary>
+    /// Gets this camera's orthographic bounds in world space.
+    /// </summary>
+    /// <param name="camera"></param>
+    /// <returns></returns>
+    public static Bounds GetOrthographicBounds(this Camera camera)
+    {
+        float cameraHeight = camera.orthographicSize * 2;
+        Bounds bounds = new Bounds(
+            camera.transform.position,
+            new Vector3(cameraHeight * camera.aspect, cameraHeight, 0));
+        return bounds;
     }
 }
