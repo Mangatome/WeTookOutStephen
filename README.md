@@ -1,6 +1,8 @@
 # WeTookOutStephen
 
-An infinite game developed at the 2016 GlobalGameJam in Karlsruhe
+An infinite game developed at the 2016 GlobalGameJam in Karlsruhe.
+
+This game is procedurally generating its own game mechanics. Yes, you heard right. We are from from the future. Get your brains wet.
 
 http://globalgamejam.org/2016/games/we-took-out-steve
 
