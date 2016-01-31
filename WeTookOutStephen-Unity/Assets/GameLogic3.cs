@@ -8,6 +8,7 @@ public class GameLogic3 : MonoBehaviour {
     public List<Sprite> foregrounds;
 
     public MusicMixer musicMixer;
+    public SoundEffectMixer soundMixer;
 
     private SpriteRenderer _currentBackground; // order = -1
     private SpriteRenderer _nextBackground; // order = -2
@@ -28,12 +29,14 @@ public class GameLogic3 : MonoBehaviour {
             if (_foregroundObjects.Count > 0)
             {
                 Destroy(_foregroundObjects[0].gameObject);
+                soundMixer.playRandom();
                 _foregroundObjects.RemoveAt(0);
             }
 
             if (_foregroundObjects.Count == 0)
             {
                 StartCoroutine(NextLevel());
+                soundMixer.playZoomSound();
             }
         }
 	}
