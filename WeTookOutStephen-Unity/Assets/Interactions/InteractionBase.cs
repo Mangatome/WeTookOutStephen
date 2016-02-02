@@ -19,6 +19,16 @@ public class InteractionBase : MonoBehaviour {
 
     }
 
+    protected void OnInteractionStart()
+    {
+        SendMessage("OnInteractionStarted", this, SendMessageOptions.DontRequireReceiver);
+    }
+
+    protected void OnInteractionAbort()
+    {
+        SendMessage("OnInteractionAborted", this, SendMessageOptions.DontRequireReceiver);
+    }
+
     #region Gizmos
 
     void OnDrawGizmos()

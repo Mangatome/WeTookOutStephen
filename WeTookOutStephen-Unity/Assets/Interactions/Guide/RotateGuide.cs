@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ClickGuide : MonoBehaviour {
+public class RotateGuide : MonoBehaviour {
     
     // Use this for initialization
 	void Start () {

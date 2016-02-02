@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DownUpGuide : MonoBehaviour {
+public class ScaleDownGuide : MonoBehaviour {
 
     private Vector3 scaling;
     private Vector3 startScaling;
