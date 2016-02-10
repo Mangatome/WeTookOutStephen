@@ -15,6 +15,7 @@ public class GameLogic3 : MonoBehaviour {
 
     public InteractionBase downUpPrefab;
     public InteractionBase clickPrefab;
+    public DragAwayInteraction dragAwayPrefab;
 
     private SpriteRenderer _currentBackground; // order = -1
     private SpriteRenderer _nextBackground; // order = -2
@@ -171,16 +172,26 @@ public class GameLogic3 : MonoBehaviour {
 
     private Container InjectInteraction(SpriteRenderer sr)
     {
+        Transform t = sr.transform;
+        
         // Adding interaction and guide.
         InteractionBase spawn;
         float v = Random.value;
-        if (v < 0.5f)
+        float n = 1f / 3f;
+        if (v < n)
         {
             spawn = Instantiate<InteractionBase>(clickPrefab);
         }
-        else
+        else if (v < n * 2)
         {
             spawn = Instantiate<InteractionBase>(downUpPrefab);
+        }
+        else
+        {
+            DragAwayInteraction drag = Instantiate<DragAwayInteraction>(dragAwayPrefab);
+            drag.draggedRoot = t;
+            drag.minDistance = sr.bounds.extents.magnitude / t.localScale.magnitude;
+            spawn = drag;
         }
         SpriteRenderer spawnSr = spawn.GetComponent<SpriteRenderer>();
 
@@ -189,7 +200,6 @@ public class GameLogic3 : MonoBehaviour {
         spawnSr.FitToBounds(sr.bounds, Space.Self, true);
 
         // Creating container.
-        Transform t = sr.transform;
         spawn.transform.parent = t;
         return t.gameObject.AddComponent<Container>();
     }
